@@ -1,52 +1,2157 @@
-<!DOCTYPE html><html lang="en"><head>
-    <meta charset="UTF-8" http-equiv="X-UA-Compatible" name="welcome page" content="Ektedar Ahmad, IITian, Software Engineer, IIT Jodhpur, Portfolio">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link href="https://fonts.googleapis.com/css2?family=Charm&family=Courgette&family=Noto+Nastaliq+Urdu:wght@600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css1/style.css">
-    <title>Ektedar Ahmad</title>
-    <link rel="shortcut icon" href="images/cursor.png" type="image/x-icon">
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KC29K2JH6F"></script><script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ektedar Ahmad – Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  gtag('config', 'G-KC29K2JH6F');
-</script></head>
-<!-- Google tag (gtag.js) -->
+    :root {
+      --background: hsl(201, 100%, 13%);
+      --foreground: hsl(0, 0%, 100%);
+      --muted-foreground: hsl(240, 4%, 66%);
+      --primary: hsl(0, 0%, 100%);
+      --primary-foreground: hsl(0, 0%, 4%);
+      --secondary: hsl(0, 0%, 10%);
+      --muted: hsl(0, 0%, 10%);
+      --accent: hsl(0, 0%, 10%);
+      --border: rgba(255, 255, 255, 0.08);
+      --input: hsl(0, 0%, 18%);
+      --font-display: 'Instrument Serif', serif;
+      --font-body: 'Inter', sans-serif;
+    }
 
+    html {
+      scroll-behavior: smooth;
+    }
 
+    html, body {
+      width: 100%;
+      background: var(--background);
+      color: var(--foreground);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    /* Fixed ambient video backdrops */
+    video.bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(180deg, 
+        rgba(0, 43, 66, 0.12) 0%, 
+        rgba(10, 15, 30, 0.88) 50%, 
+        rgba(5, 8, 16, 0.96) 100%);
+      opacity: 0.12; /* Start extremely clear for fully focused background video */
+      z-index: 1;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .hero-wrapper {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      z-index: 2;
+    }
+
+    /* Sticky Blurred Glass Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, border-bottom 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(10, 25, 47, 0.45);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .nav-inner {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 32px;
+      max-width: 1280px;
+      margin: 0 auto;
+      transition: padding 0.4s ease;
+    }
+    nav.scrolled .nav-inner {
+      padding: 16px 32px;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.875rem;
+      letter-spacing: -0.02em;
+      color: var(--foreground);
+      text-decoration: none;
+    }
+    .logo sup { font-size: 0.75rem; }
+
+    .nav-links {
+      display: none;
+      gap: 32px;
+      list-style: none;
+    }
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--foreground); }
+
+    .btn-nav {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--foreground);
+      padding: 10px 24px;
+      border-radius: 9999px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      transition: transform 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-nav:hover { transform: scale(1.03); }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 180px 24px 140px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    h1.hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.75rem, 8vw, 6.25rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      max-width: 1100px;
+      font-weight: 400;
+      color: var(--foreground);
+    }
+    h1.hero-title em {
+      font-style: normal;
+      color: var(--muted-foreground);
+    }
+
+    .hero-sub {
+      color: var(--muted-foreground);
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      max-width: 680px;
+      margin-top: 32px;
+      line-height: 1.7;
+    }
+
+    .btn-hero {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--foreground);
+      padding: 20px 56px;
+      border-radius: 9999px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      margin-top: 48px;
+      transition: transform 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-hero:hover { transform: scale(1.03); }
+
+    .liquid-glass {
+      background: rgba(255, 255, 255, 0.015);
+      background-blend-mode: luminosity;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: none;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .liquid-glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.4px;
+      background: linear-gradient(180deg,
+        rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%,
+        rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+        rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    @keyframes fade-rise {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-rise          { animation: fade-rise 0.8s ease-out both; }
+    .animate-fade-rise-delay    { animation: fade-rise 0.8s ease-out 0.2s both; }
+    .animate-fade-rise-delay-2  { animation: fade-rise 0.8s ease-out 0.4s both; }
+
+    .badge-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 24px;
+    }
+    .badge {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      padding: 5px 14px;
+      border-radius: 9999px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Common Section Styles */
+    section {
+      position: relative;
+      z-index: 10;
+      padding: 120px 24px;
+      width: 100%;
+    }
+
+    .section-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .section-title em {
+      font-style: normal;
+      color: var(--muted-foreground);
+    }
+
+    .section-subtitle {
+      color: var(--muted-foreground);
+      font-size: clamp(1rem, 1.5vw, 1.125rem);
+      max-width: 720px;
+      line-height: 1.6;
+      margin-bottom: 60px;
+    }
+
+    /* Scroll reveal transitions */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Projects Section Styles */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      font-family: var(--font-body);
+      font-size: 0.825rem;
+      font-weight: 500;
+      color: var(--muted-foreground);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 10px 22px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      color: var(--foreground);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1.5px);
+    }
+    .filter-btn.active {
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    @media (min-width: 768px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .project-card .project-bullets {
+      margin-top: 14px;
+      margin-bottom: 24px;
+      padding-left: 18px;
+      list-style-type: square;
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+      line-height: 1.6;
+    }
+    .project-card .project-bullets li {
+      margin-bottom: 8px;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px;
+      padding: 32px;
+      background: rgba(10, 25, 47, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, box-shadow 0.4s ease;
+      height: 100%;
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.035);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .project-category {
+      font-size: 0.725rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted-foreground);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .project-title {
+      font-family: var(--font-body);
+      font-size: 1.35rem;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      color: var(--foreground);
+    }
+
+    .project-desc {
+      font-size: 0.925rem;
+      line-height: 1.6;
+      color: var(--muted-foreground);
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .project-tag {
+      font-size: 0.725rem;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .project-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 20px;
+      border-radius: 9999px;
+      font-size: 0.825rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      flex: 1;
+    }
+    .project-btn.primary {
+      background: var(--foreground);
+      color: var(--primary-foreground);
+    }
+    .project-btn.primary:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px);
+    }
+    .project-btn.secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--foreground);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .project-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
+    }
+    .project-btn.disabled {
+      opacity: 0.35;
+      background: rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* Experience Timeline Styles */
+    .experience-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .timeline {
+      position: relative;
+      margin-top: 48px;
+      padding-left: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      height: calc(100% - 16px);
+      width: 2px;
+      background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.5) 0%, 
+        rgba(255, 255, 255, 0.1) 60%, 
+        rgba(255, 255, 255, 0) 100%);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 56px;
+    }
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -39px;
+      top: 6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--foreground);
+      border: 4px solid #0a0f1e;
+      box-shadow: 0 0 12px var(--foreground);
+    }
+
+    .timeline-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    @media (min-width: 640px) {
+      .timeline-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+    }
+
+    .timeline-title {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+
+    .timeline-company {
+      font-size: 0.95rem;
+      color: var(--muted-foreground);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .timeline-date {
+      font-size: 0.85rem;
+      color: var(--muted-foreground);
+      padding: 5px 14px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      align-self: flex-start;
+    }
+
+    .timeline-content {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--muted-foreground);
+    }
+
+    .timeline-content ul {
+      margin-top: 12px;
+      padding-left: 20px;
+      list-style-type: square;
+    }
+
+    .timeline-content li {
+      margin-bottom: 8px;
+    }
+
+    .timeline-links {
+      display: flex;
+      gap: 16px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .timeline-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--foreground);
+      text-decoration: none;
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .timeline-link:hover {
+      border-color: var(--foreground);
+      transform: translateY(-1px);
+    }
+
+    /* Achievements/Certifications Grid */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) {
+      .achievements-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .achievements-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .achievement-card {
+      border-radius: 20px;
+      padding: 32px;
+      background: rgba(10, 25, 47, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .achievement-card:hover {
+      transform: translateY(-6px);
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .achievement-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 1.4rem;
+    }
+
+    .achievement-card.gold-glow::after {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -30%;
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0) 70%);
+      pointer-events: none;
+    }
+
+    .achievement-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+
+    .achievement-issuer {
+      font-size: 0.85rem;
+      color: var(--muted-foreground);
+      margin-top: -8px;
+      font-weight: 500;
+    }
+
+    .achievement-desc {
+      font-size: 0.925rem;
+      line-height: 1.6;
+      color: var(--muted-foreground);
+    }
+
+    .achievement-link {
+      font-size: 0.85rem;
+      color: var(--foreground);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.2);
+      width: fit-content;
+      padding-bottom: 2px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .achievement-link:hover {
+      border-color: var(--foreground);
+      transform: translateY(-1px);
+    }
+
+    /* Contact Section & Footer */
+    .contact-section {
+      padding: 80px 24px 140px;
+    }
+    
+    .contact-card {
+      border-radius: 30px;
+      padding: 60px 40px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      background: rgba(10, 25, 47, 0.3);
+    }
+
+    .contact-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .contact-title em {
+      font-style: normal;
+      color: var(--muted-foreground);
+    }
+
+    .contact-subtitle {
+      color: var(--muted-foreground);
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      align-items: center;
+      margin-top: 16px;
+    }
+    @media (min-width: 640px) {
+      .contact-actions {
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+      }
+    }
+
+    .email-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--foreground);
+      text-decoration: none;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .email-btn:hover {
+      transform: scale(1.02);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      color: var(--foreground);
+      transition: transform 0.2s;
+    }
+    .social-btn:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 40px 24px;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    @media (min-width: 768px) {
+      .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+    .footer-text {
+      font-size: 0.85rem;
+      color: var(--muted-foreground);
+    }
+
+    /* Case Study Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 10, 20, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 20px;
+    }
+    
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-container {
+      background: rgba(6, 16, 32, 0.85);
+      background-blend-mode: luminosity;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 880px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      position: relative;
+      transform: scale(0.95) translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+    }
+    
+    .modal-overlay.active .modal-container {
+      transform: scale(1) translateY(0);
+    }
+    
+    .modal-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    .modal-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .modal-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+    }
+    .modal-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--foreground);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: rotate(90deg);
+    }
+
+    .modal-content {
+      padding: 48px;
+    }
+    
+    @media (max-width: 768px) {
+      .modal-content {
+        padding: 32px 24px;
+      }
+      .modal-close-btn {
+        top: 16px;
+        right: 16px;
+      }
+    }
+
+    .modal-category {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted-foreground);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--foreground);
+      margin-bottom: 24px;
+    }
+    
+    .modal-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      margin-bottom: 40px;
+    }
+    
+    @media (min-width: 640px) {
+      .modal-meta-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    
+    .modal-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .modal-meta-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted-foreground);
+      font-weight: 600;
+    }
+    
+    .modal-meta-value {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--foreground);
+    }
+
+    .modal-section {
+      margin-bottom: 36px;
+    }
+    
+    .modal-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-section-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--foreground);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      letter-spacing: -0.01em;
+    }
+
+    .modal-text {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--muted-foreground);
+      margin-bottom: 16px;
+    }
+    
+    .modal-text em {
+      color: var(--foreground);
+      font-style: normal;
+    }
+    
+    .modal-list {
+      padding-left: 20px;
+      list-style-type: square;
+      margin-bottom: 16px;
+    }
+    
+    .modal-list li {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--muted-foreground);
+      margin-bottom: 8px;
+    }
+    
+    .modal-list li strong {
+      color: var(--foreground);
+    }
+    
+    .modal-highlight-box {
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--foreground);
+      padding: 16px 20px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--muted-foreground);
+    }
+
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Profile & Experience Layout Styles */
+    .experience-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: start;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    @media (min-width: 1024px) {
+      .experience-layout {
+        grid-template-columns: 380px 1fr;
+        gap: 64px;
+      }
+    }
+    
+    .profile-card {
+      padding: 32px;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: sticky;
+      top: 100px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(6, 16, 32, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    
+    .profile-img-container {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 24px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .profile-card:hover .profile-img-container {
+      transform: scale(1.05);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 12px 32px rgba(0, 150, 255, 0.2);
+    }
+    
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .profile-info {
+      width: 100%;
+    }
+    
+    .profile-name {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    
+    .profile-title {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+      margin-bottom: 16px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      display: inline-block;
+    }
+    
+    .profile-bio {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--muted-foreground);
+      margin-bottom: 24px;
+      text-align: justify;
+    }
+    
+    .profile-quick-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .profile-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: left;
+    }
+    
+    .profile-stat-val {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+    
+    .profile-stat-lbl {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+  </style>
+</head>
 <body>
-    <div class="trapy_idx"></div>
-    <div class="wlcm-txt">
-        Hey, Ektedar Ahmad here
-    </div>
-    <nav class="abt_nav">
-        <div class="navbs">
-          
-            <button class="" onclick="location.href = 'entry.html' ">
-                Click Here
-            </button>
-           
-        </div>
+  <!-- Ambient Backdrop -->
+  <video class="bg-video" autoplay loop muted playsinline>
+    <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4" />
+  </video>
+  <div class="bg-overlay"></div>
+
+  <!-- Hero Section & Header -->
+  <div class="hero-wrapper" id="home">
+    <nav>
+      <div class="nav-inner">
+        <a href="#home" class="logo">Ektedar<sup>®</sup></a>
+        <ul class="nav-links">
+          <li><a href="#home" class="active">Home</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#achievements">Achievements</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#projects" class="btn-nav liquid-glass">View Work</a>
+      </div>
     </nav>
-    <div class="trapy3"></div>
 
-    <main id="main_canv"></main>
-    <script src="js1/three.min.js"></script>
-    <script src="js1/vanta_rings.js"></script>
-    <script>
-        VANTA.RINGS({
-          el: "#main_canv",
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          scale: 1.00,
-          scaleMobile: 1.00,
-          backgroundColor: 0x50c2c
-        })
-    </script>
+    <section class="hero-section">
+      <h1 class="hero-title animate-fade-rise">
+        Building at the edge of <em>chemistry</em> and <em>intelligence.</em>
+      </h1>
+      <p class="hero-sub animate-fade-rise-delay">
+        Chemical Engineering student at IIT Jodhpur with a Minor in AI — designing simulation pipelines, machine learning systems, and real-time data experiences. 2nd runner-up at Inter IIT Tech Meet 13.0.
+      </p>
+      <div class="badge-row animate-fade-rise-delay">
+        <span class="badge liquid-glass">IIT Jodhpur · 2027</span>
+        <span class="badge liquid-glass">Codeforces 1200+</span>
+        <span class="badge liquid-glass">JEE 99.01%ile</span>
+        <span class="badge liquid-glass">Amazon ML School</span>
+      </div>
+      <a href="#projects" class="btn-hero liquid-glass animate-fade-rise-delay-2">Explore My Work</a>
+    </section>
+  </div>
 
-</body></html>
+  <!-- Projects Section -->
+  <section id="projects">
+    <div class="section-container">
+      <h2 class="section-title reveal-item">Featured <em>Projects</em></h2>
+      <p class="section-subtitle reveal-item">A showcase of advanced chemical engineering simulators, robotics architectures, high-frequency systems, and deep learning models.</p>
+      
+      <!-- Filter Bar -->
+      <div class="filter-bar reveal-item">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="ai-ml">AI & ML</button>
+        <button class="filter-btn" data-filter="robotics">Robotics & ROS2</button>
+        <button class="filter-btn" data-filter="systems">Systems & Simulation</button>
+        <button class="filter-btn" data-filter="web">Web Development</button>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Featured Project 1: Defect Detection -->
+        <div class="project-card liquid-glass reveal-item" data-category="ai-ml systems">
+          <div class="project-category">AI & Computer Vision</div>
+          <h3 class="project-title">Industrial Defect Detection System</h3>
+          <p class="project-desc">An unsupervised deep learning anomaly detection pipeline using a U-Net Convolutional Autoencoder (UNetAE), trained exclusively on defect-free parts to automatically detect and pixel-level localize faults like scratches or dents.</p>
+          <ul class="project-bullets">
+            <li>Engineered a UNetAE in PyTorch that compresses high-res inputs and reconstructs normal statistical structures.</li>
+            <li>Formulated a combined &alpha;-MSE + &beta;-SSIM loss (&alpha;=0.6, &beta;=0.4) to optimize structural similarity and pixel fidelity.</li>
+            <li>Achieved strong localization performance with an image-level AUROC of 0.5710 and pixel-level AUROC of 0.8318 on the MVTec leather dataset.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">PyTorch</span>
+            <span class="project-tag">UNetAutoencoder</span>
+            <span class="project-tag">Anomaly Detection</span>
+            <span class="project-tag">MVTec Benchmark</span>
+          </div>
+          <div class="project-actions">
+            <button class="project-btn primary" data-open-modal="defect-detection">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Read Case Study
+            </button>
+            <a href="./main.pdf" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              View Paper (PDF)
+            </a>
+          </div>
+        </div>
+
+        <!-- Featured Project 2: RL PID Tuning -->
+        <div class="project-card liquid-glass reveal-item" data-category="ai-ml systems">
+          <div class="project-category">Process Control & RL</div>
+          <h3 class="project-title">AI-Driven PID Tuning (TD3)</h3>
+          <p class="project-desc">A model-free reinforcement learning framework reproducing and enhancing TD3-based PID tuning on highly nonlinear chemical reactors, continuous stirred tanks (CSTR), and mechanical systems.</p>
+          <ul class="project-bullets">
+            <li>Modeled PID controller gains ($K_p, K_i, K_d$) as weights of a single-layer neural network trained by the TD3 algorithm.</li>
+            <li>Upgraded standard TD3 with a custom &Delta;u rate-of-change reward &amp; overshoot penalty to successfully solve "Integrator Collapse".</li>
+            <li>Integrated Prioritized Experience Replay (PER) and Curriculum Learning to accelerate policy convergence and stability.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">Reinforcement Learning</span>
+            <span class="project-tag">TD3 Algorithm</span>
+            <span class="project-tag">Process Control</span>
+            <span class="project-tag">PyTorch</span>
+          </div>
+          <div class="project-actions">
+            <button class="project-btn primary" data-open-modal="pid-tuning">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Read Case Study
+            </button>
+            <a href="./b23ch1017.pdf" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              View Report (PDF)
+            </a>
+          </div>
+        </div>
+
+        <!-- Featured Project 3: N-Butyl Acetate Plant Design -->
+        <div class="project-card liquid-glass reveal-item" data-category="systems">
+          <div class="project-category">Chemical Plant Design</div>
+          <h3 class="project-title">N-Butyl Acetate Plant Design</h3>
+          <p class="project-desc">A comprehensive industrial-scale chemical plant conceptual design and techno-economic evaluation for producing 1000 Tonnes Per Day of N-Butyl Acetate using Aspen Plus V14.</p>
+          <ul class="project-bullets">
+            <li>Simulated an entrainer-assisted reactive distillation system using toluene to drive esterification equilibrium forward.</li>
+            <li>Designed large-scale chemical equipment including a Continuous Stirred-Tank Reactor (CSTR) and a massive 37m separation column.</li>
+            <li>Executed extensive process integration, TEMA shell-and-tube heat exchanger network sizing, and full cost estimation.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">Aspen Plus V14</span>
+            <span class="project-tag">Reactive Distillation</span>
+            <span class="project-tag">Process Simulation</span>
+            <span class="project-tag">Plant Economics</span>
+          </div>
+          <div class="project-actions">
+            <button class="project-btn primary" data-open-modal="plant-design">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Read Case Study
+            </button>
+            <a href="./NBA_Plant_Report.pdf" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              View Report (PDF)
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 4: SpecInference -->
+        <div class="project-card liquid-glass reveal-item" data-category="ai-ml systems">
+          <div class="project-category">Informatics & ML</div>
+          <h3 class="project-title">SpecInference: Spectral Analysis Tool</h3>
+          <p class="project-desc">Designed a Measurement Informatics workflow to solve the Inverse Problem of estimating chemical concentrations from noisy Mass Spectrometry signals using Non-Negative Least Squares (NNLS).</p>
+          <ul class="project-bullets">
+            <li>Designed a workflow to solve the Inverse Problem ($Y=AX$) of estimating chemical concentrations using NNLS optimization.</li>
+            <li>Created a physics-based Forward Model to simulate Gaussian spectral peaks and introduce controlled sensor noise under low-SNR conditions.</li>
+            <li>Built a bilingual (English/Japanese) Streamlit dashboard for real-time visualization of reconstruction error (residual) and compositions.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">SciPy</span>
+            <span class="project-tag">Streamlit</span>
+            <span class="project-tag">NNLS</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/ektedar225/-Spectral-Analysis-Lab-" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+            <a href="https://spectral-analysis-lab.streamlit.app/" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 2: Automated Mass Spec Pipeline -->
+        <div class="project-card liquid-glass reveal-item" data-category="ai-ml systems">
+          <div class="project-category">Research & DSP</div>
+          <h3 class="project-title">Mass Spectrometry DSP Pipeline</h3>
+          <p class="project-desc">Developed a digital signal processing pipeline mimicking commercial instrument software, utilizing noise filtering and morphological drift correction.</p>
+          <ul class="project-bullets">
+            <li>Developed a DSP pipeline utilizing Savitzky-Golay filtering for noise reduction and morphological minimum filtering for baseline drift.</li>
+            <li>Engineered a peak detection algorithm identifying isotopic envelopes in high-resolution spectral data for over 1,400 ions.</li>
+            <li>Implemented an Active Sensing GUI loop where users tune SNR thresholds and filter windows to view instant optimization results.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">Plotly</span>
+            <span class="project-tag">DSP</span>
+            <span class="project-tag">Streamlit</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/ektedar225/Automated-Mass-Spectrometry-Signal-Processing-Pipeline" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+            <a href="https://automated-mass-spectrometry-signal-processing-pipeline9.streamlit.app/" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 3: Crypto Matching Engine -->
+        <div class="project-card liquid-glass reveal-item" data-category="systems">
+          <div class="project-category">Systems & Finance</div>
+          <h3 class="project-title">High-Performance Matching Engine</h3>
+          <p class="project-desc">Engineered a production-grade cryptocurrency matching engine supporting multiple order types with sub-millisecond execution latency.</p>
+          <ul class="project-bullets">
+            <li>Developed matching engine supporting multiple order types (limit, market, IOC, FOK, stop-loss, take-profit) with sub-millisecond latency.</li>
+            <li>Implemented concurrent per-symbol transactional locking and heap-based order books for O(log N) matching under high load.</li>
+            <li>Built REST and WebSocket APIs with async/await architecture, secure JSON persistence, and full pytest coverage.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">FastAPI</span>
+            <span class="project-tag">asyncio</span>
+            <span class="project-tag">WebSockets</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/ektedar225/crypto_matching_engine" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+            <a href="https://github.com/ektedar225/crypto_matching_engine" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 4: Medicine Recommendation Model -->
+        <div class="project-card liquid-glass reveal-item" data-category="ai-ml">
+          <div class="project-category">Healthcare & ML</div>
+          <h3 class="project-title">Medicine Recommendation Model</h3>
+          <p class="project-desc">Developed an intelligent diagnostic model under Dr. Seema Saini to predict diseases with 85% accuracy on 10,000+ reports.</p>
+          <ul class="project-bullets">
+            <li>Developed intelligent models to predict diseases using KNN, Naïve Bayes, and Random Forest on 10,000+ data points.</li>
+            <li>Optimized data processing pipelines and deployed a Flask-based interface supporting 20+ concurrent files.</li>
+            <li>Improved medical report processing speed by 30%, assisting doctors in disease analysis and medication suggestions.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">KNN</span>
+            <span class="project-tag">Random Forest</span>
+            <span class="project-tag">Flask</span>
+            <span class="project-tag">Python</span>
+          </div>
+          <div class="project-actions">
+            <button class="project-btn secondary disabled">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+              N/A
+            </button>
+            <a href="https://www.linkedin.com/posts/ektedar-ahmad-91915b280_ai-healthcareinnovation-machinelearning-activity-7324462238415683586-ESZD?utm_source=share&utm_medium=member_desktop&rcm=ACoAAERdsGUBkrVTuReVgSa9fz8Np7osS9zTMqc" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 5: Handwritten Answer Sheet Evaluation -->
+        <div class="project-card liquid-glass reveal-item" data-category="ai-ml web">
+          <div class="project-category">AI & Computer Vision</div>
+          <h3 class="project-title">Handwritten Answer Sheet Grading</h3>
+          <p class="project-desc">Developed a neural network system grading handwritten sheets with 72% accuracy using CNN-based feature extraction under Dr. Santosh Varanasi.</p>
+          <ul class="project-bullets">
+            <li>Developed neural network grading models using CNN-based feature extraction and OpenCV preprocessing.</li>
+            <li>Integrated React.js for front-end functionality, enabling real-time uploads, previews, and score displays.</li>
+            <li>Automated the end-to-end evaluation workflow through model inference and a responsive visual interface.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">Generative AI</span>
+            <span class="project-tag">CNN</span>
+            <span class="project-tag">OpenCV</span>
+            <span class="project-tag">React.js</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/ektedar225/answersheet_evaluator" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+            <a href="https://ektedar225.github.io/answersheet_evaluator/" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 6: Autonomous Factory Inspection Robot -->
+        <div class="project-card liquid-glass reveal-item" data-category="robotics">
+          <div class="project-category">Robotics & ROS2</div>
+          <h3 class="project-title">Autonomous Factory Inspector</h3>
+          <p class="project-desc">Developed an autonomous mobile robot for industrial monitoring utilizing ROS 2 Navigation2 and Cartographer (SLAM).</p>
+          <ul class="project-bullets">
+            <li>Achieved dynamic mapping and reliable navigation in unstructured factory environments using Navigation2 and SLAM.</li>
+            <li>Engineered an OpenCV custom computer vision pipeline automating hazard detection and visual anomaly logging.</li>
+            <li>Designed a Linux multi-node architecture to orchestrate asynchronous mission planning, sensor fusion, and state management.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">ROS 2 Jazzy</span>
+            <span class="project-tag">Navigation2</span>
+            <span class="project-tag">Cartographer</span>
+            <span class="project-tag">OpenCV</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/ektedar225/autonomous_factory_inspector" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+            <button class="project-btn secondary disabled">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Simulation Only
+            </button>
+          </div>
+        </div>
+
+        <!-- Project 7: ROS2 Web Teleoperation Interface -->
+        <div class="project-card liquid-glass reveal-item" data-category="robotics web">
+          <div class="project-category">Robotics & Web</div>
+          <h3 class="project-title">ROS2 Web Teleoperation Interface</h3>
+          <p class="project-desc">Engineered a real-time web interface for 3-joint robotic arm manipulation (Base, Shoulder, Elbow) using ROSBridge WebSocket protocols.</p>
+          <ul class="project-bullets">
+            <li>Achieved real-time teleoperation arm manipulation and dynamic joint feedback via ROSBridge WebSocket protocol.</li>
+            <li>Built Python backend for ROS2 node management and a HTML/JS client with interactive slider manipulation controls.</li>
+            <li>Deployed colcon-integrated packages alongside latency monitors and active joint position telemetry visualizers.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">ROS2</span>
+            <span class="project-tag">ROSBridge</span>
+            <span class="project-tag">WebSockets</span>
+            <span class="project-tag">JavaScript</span>
+          </div>
+          <div class="project-actions">
+            <button class="project-btn secondary disabled">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              N/A
+            </button>
+            <button class="project-btn secondary disabled">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Offline
+            </button>
+          </div>
+        </div>
+
+        <!-- Project 8: Ammonia Diffusion Simulator -->
+        <div class="project-card liquid-glass reveal-item" data-category="systems">
+          <div class="project-category">Chemical & Simulations</div>
+          <h3 class="project-title">Ammonia Simulator & CFD</h3>
+          <p class="project-desc">Designed an industrial simulation framework integrating Vapor-Liquid Equilibrium (VLE) solvers and spatial transport models.</p>
+          <ul class="project-bullets">
+            <li>Developed VLE thermodynamic engines utilizing modified Raoult's Law and the Rachford-Rice optimization algorithm.</li>
+            <li>Programmed custom 2D diffusion solvers from scratch using the Finite Difference Method (FDM) to compute spatial dispersion profiles.</li>
+            <li>Deployed simulator as high-performance Streamlit dashboard, featuring interactive phase diagrams and dispersion animations.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">SciPy</span>
+            <span class="project-tag">FDM Solver</span>
+            <span class="project-tag">Streamlit</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/ektedar225/Ammonia_VLE_Simulator" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+            <a href="https://ammoniavlesimulator.streamlit.app/" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 9: Hind Tabreed -->
+        <div class="project-card liquid-glass reveal-item" data-category="web">
+          <div class="project-category">Full Stack Web</div>
+          <h3 class="project-title">Hind Tabreed Website</h3>
+          <p class="project-desc">Built a modern, SEO-optimized service and client platform for a professional appliance business in Riyadh.</p>
+          <ul class="project-bullets">
+            <li>Engineered front-to-back architecture using React and TypeScript for maximum static load performance.</li>
+            <li>Integrated appointment forms, direct WhatsApp communications, and customer review modules.</li>
+            <li>Optimized page performance and loaded dynamic media layouts using static deployment frameworks.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">React</span>
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">SEO Optimization</span>
+            <span class="project-tag">Vite</span>
+          </div>
+          <div class="project-actions">
+            <button class="project-btn secondary disabled">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+              N/A
+            </button>
+            <a href="https://riyadh-abdul-qadir-ac-services.com/" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 10: Ektedar Coin -->
+        <div class="project-card liquid-glass reveal-item" data-category="systems">
+          <div class="project-category">Algorithms & Blockchain</div>
+          <h3 class="project-title">Ektedar Coin — Blockchain System</h3>
+          <p class="project-desc">Architected a blockchain simulator based on object-oriented structures and custom data structure implementations.</p>
+          <ul class="project-bullets">
+            <li>Defined blocks, transaction pools, mining difficulty algorithms, and wallet validation using OOD models.</li>
+            <li>Implemented immutable linked list architectures to enforce chaining and avoid unauthorized block manipulation.</li>
+            <li>Designed transaction sorting queues to feed mining workflows and maintain ledger immutability.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">OOD</span>
+            <span class="project-tag">Linked Lists</span>
+            <span class="project-tag">Queues</span>
+            <span class="project-tag">Blockchain</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/ektedar225/EKT_Coin" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+            <a href="https://ektedar225.github.io/EKT_Coin/" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 11: Solar Panel recycling -->
+        <div class="project-card liquid-glass reveal-item" data-category="systems">
+          <div class="project-category">Energy & Consulting</div>
+          <h3 class="project-title">Solar Panel Recycling Strategy</h3>
+          <p class="project-desc">Built SARIMA models estimating 18,061 kilotonnes of EOL solar waste by 2050 to optimize regional capacity setups.</p>
+          <ul class="project-bullets">
+            <li>Executed a detailed cost–benefit analysis for a 1000 TPY recycling unit, achieving a Benefit–Cost Ratio of 1.811.</li>
+            <li>Projected the prevention of 33 Gt CO₂ emissions through structured lifecycle management setups.</li>
+            <li>Designed an Extended Producer Responsibility (EPR) recycling setup integrating AI/IoT collection hubs.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">SARIMA</span>
+            <span class="project-tag">Forecasting</span>
+            <span class="project-tag">Cost-Benefit</span>
+            <span class="project-tag">EPR Model</span>
+          </div>
+          <div class="project-actions">
+            <button class="project-btn secondary disabled">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              N/A
+            </button>
+            <button class="project-btn secondary disabled">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Offline
+            </button>
+          </div>
+        </div>
+
+        <!-- Project 12: HackRx Document Q&A Service -->
+        <div class="project-card liquid-glass reveal-item" data-category="ai-ml">
+          <div class="project-category">AI & Systems</div>
+          <h3 class="project-title">HackRx Document Q&A Service</h3>
+          <p class="project-desc">Built an async FastAPI service to parse and cache PDFs/ZIPs inside Pinecone vector spaces for instant RAG responses.</p>
+          <ul class="project-bullets">
+            <li>Designed namespace-based caching and Q&A retrieval with >= 0.95 similarity for instant repeated answers.</li>
+            <li>Integrated OpenAI with a custom RetrievalQA prompt ensuring concise, numerical, and document-grounded responses.</li>
+            <li>Optimized parsing frameworks to handle highly structured document uploads with instant semantic lookups.</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag">FastAPI</span>
+            <span class="project-tag">Pinecone</span>
+            <span class="project-tag">OpenAI</span>
+            <span class="project-tag">RAG Caching</span>
+          </div>
+          <div class="project-actions">
+            <button class="project-btn secondary disabled">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              Private
+            </button>
+            <button class="project-btn secondary disabled">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Offline
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience">
+    <div class="section-container">
+      <h2 class="section-title reveal-item">Professional <em>Journey</em></h2>
+      <p class="section-subtitle reveal-item">A timeline of key research roles, full-stack internships, and technical achievements.</p>
+      
+      <div class="experience-layout reveal-item">
+        <!-- Profile Card -->
+        <div class="profile-card liquid-glass">
+          <div class="profile-img-container">
+            <img src="photo.jpg" alt="Ektedar Ahmad" class="profile-img">
+          </div>
+          <div class="profile-info">
+            <h3 class="profile-name">Ektedar Ahmad</h3>
+            <span class="profile-title">Chemical Engineering &amp; AI Scholar</span>
+            <p class="profile-bio">Applying deep learning, reinforcement learning, and advanced process simulation pipelines to solve complex industrial and physical challenges. Codeforces 1200+, JEE 99.01%ile, and Amazon ML Summer School graduate.</p>
+            
+            <div class="profile-quick-stats">
+              <div class="profile-stat-item">
+                <span class="profile-stat-val">IIT Jodhpur</span>
+                <span class="profile-stat-lbl">Education</span>
+              </div>
+              <div class="profile-stat-item">
+                <span class="profile-stat-val">2nd Runner-Up</span>
+                <span class="profile-stat-lbl">Inter IIT 13.0 Tech Meet</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experience Timeline -->
+        <div class="experience-container">
+          <div class="timeline">
+          <!-- Timeline 1 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-title">Inter IIT Tech Meet 13.0</h3>
+                <div class="timeline-company">ISRO, Support Team — 2nd Runner-up</div>
+              </div>
+              <span class="timeline-date">Dec 2024 - Jan 2025</span>
+            </div>
+            <div class="timeline-content">
+              <p>Represented IIT Jodhpur among 23 IITs, securing 3rd place overall. Developed a high-performance 3D lunar surface element mapping model to inspect mineral distribution.</p>
+              <ul>
+                <li>Mapped XRF line intensity data from 50+ lunar samples with 90% spatial mapping accuracy using Three.js and WebGL.</li>
+                <li>Conducted detailed composition analysis on 100+ elemental maps to identify structural heterogeneity with 95% detection accuracy.</li>
+              </ul>
+              <div class="timeline-links">
+                <a href="https://ektedar225.github.io/3D-lunar-visualization-model/" target="_blank" rel="noopener noreferrer" class="timeline-link">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                  Explore 3D Lunar Model
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline 2 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-title">Main Flow Services</h3>
+                <div class="timeline-company">Full Stack Web Development Intern</div>
+              </div>
+              <span class="timeline-date">Aug 2024 - Sep 2024</span>
+            </div>
+            <div class="timeline-content">
+              <p>Designed and built a premium subscription platform utilizing the MERN stack (MongoDB, Express, React, Node.js).</p>
+              <ul>
+                <li>Optimized React frontend assets, reducing average page load times from 1.5 seconds to 1.1 seconds.</li>
+                <li>Integrated Razorpay payment gateways and Google OAuth, raising overall visitor-to-subscriber sign-up conversions by 30%.</li>
+              </ul>
+              <div class="timeline-links">
+                <a href="https://ektedar225.github.io/Main_flow_internship/" target="_blank" rel="noopener noreferrer" class="timeline-link">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                  View MERN App
+                </a>
+                <a href="https://drive.google.com/file/d/19e5D9DpyviX-uCRsdzuGz2E-X4jMk_Wj/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="timeline-link">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  Verify MERN Internship
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline 3 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-title">Amazon ML Summer School</h3>
+                <div class="timeline-company">Machine Learning Participant</div>
+              </div>
+              <span class="timeline-date">Jun 2024 - Jul 2024</span>
+            </div>
+            <div class="timeline-content">
+              <p>Selected among elite engineering students globally for Amazon's ML intensive course, focusing on mathematical models, industrial neural net architectures, and deep recommenders.</p>
+              <div class="timeline-links">
+                <a href="https://drive.google.com/file/d/1aNTvwz4KmG5AvLkI0_EdPd1zeDMoO2B4/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="timeline-link">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  Verify Certificate
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section id="achievements">
+    <div class="section-container">
+      <h2 class="section-title reveal-item">Credentials & <em>Achievements</em></h2>
+      <p class="section-subtitle reveal-item">Validations of skill in quantitative analytics, coding algorithms, and data modeling.</p>
+      
+      <div class="achievements-grid">
+        <!-- Card 1 -->
+        <div class="achievement-card liquid-glass gold-glow reveal-item">
+          <div class="achievement-badge">🏆</div>
+          <h3 class="achievement-title">WorldQuant BRAIN Gold</h3>
+          <p class="achievement-issuer">WorldQuant · Quantitative Analytics</p>
+          <p class="achievement-desc">Achieved the elite Gold Level quant credential, developing predictive mathematical alphas and signal models for asset price tracking.</p>
+          <a href="https://drive.google.com/file/d/1DKBp03BazSlzUfu-0sXZdxYh1ny13pAj/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="achievement-link">
+            Verify Gold Credential
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="achievement-card liquid-glass reveal-item">
+          <div class="achievement-badge">📈</div>
+          <h3 class="achievement-title">WorldQuant BRAIN Stage 1</h3>
+          <p class="achievement-issuer">WorldQuant · Quant Research</p>
+          <p class="achievement-desc">Completed Stage 1 of quantitative analysis training, engineering signal equations based on high-frequency metrics.</p>
+          <a href="https://drive.google.com/file/d/1ixu-RyR4dba_dmzF1Cv2y-XRbeGksc_1/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="achievement-link">
+            Verify Stage 1 Credential
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="achievement-card liquid-glass reveal-item">
+          <div class="achievement-badge">💻</div>
+          <h3 class="achievement-title">AlgoUniversity Core DSA</h3>
+          <p class="achievement-issuer">AlgoUniversity</p>
+          <p class="achievement-desc">Mastered core Data Structures, Sorting optimization, and Object-Oriented patterns to engineer fast software systems.</p>
+          <a href="https://drive.google.com/file/d/19e5D9DpyviX-uCRsdzuGz2E-X4jMk_Wj/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="achievement-link">
+            Verify DSA Credential
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="section-container">
+      <div class="contact-card liquid-glass reveal-item">
+        <h2 class="contact-title">Let's build something <em>extraordinary.</em></h2>
+        <p class="contact-subtitle">I'm always open to discussing research collaborations, software engineering internships, or chemical-AI simulation models.</p>
+        <div class="contact-actions">
+          <a href="mailto:b23ch1017@iitj.ac.in" class="email-btn primary project-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            b23ch1017@iitj.ac.in
+          </a>
+          <div class="social-links">
+            <a href="https://github.com/ektedar225" target="_blank" rel="noopener noreferrer" class="social-btn liquid-glass" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            </a>
+            <a href="https://linkedin.com/in/ektedar-ahmad-91915b280/" target="_blank" rel="noopener noreferrer" class="social-btn liquid-glass" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-text">© 2026 Ektedar Ahmad. All rights reserved.</p>
+      <p class="footer-text">Built at the intersection of Chemistry & Intelligence.</p>
+    </div>
+  </footer>
+
+  <!-- Case Study Modals -->
+  <!-- Modal 1: Defect Detection -->
+  <div class="modal-overlay" id="modal-defect-detection">
+    <div class="modal-container">
+      <button class="modal-close-btn" aria-label="Close Case Study">&times;</button>
+      <div class="modal-content">
+        <div class="modal-category">AI & Computer Vision</div>
+        <h2 class="modal-title">Industrial Defect Detection System for Manufactured Parts</h2>
+        
+        <div class="modal-meta-grid">
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Institution</span>
+            <span class="modal-meta-value">IIT Jodhpur</span>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Timeline</span>
+            <span class="modal-meta-value">April 2026</span>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Key Stack</span>
+            <span class="modal-meta-value">PyTorch, OpenCV</span>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Co-Authors</span>
+            <span class="modal-meta-value">Arush & Harshita</span>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Overview & Motivation</h3>
+          <p class="modal-text">Automated visual inspection constitutes the critical infrastructure of quality assurance within contemporary manufacturing environments. Traditional supervised deep learning approaches face a fundamental bottleneck: defective training samples are extremely scarce, and the morphological manifestation of a defect is highly unpredictable. It is logistically impossible to construct a supervised dataset encompassing all potential failure modes.</p>
+          <p class="modal-text">To resolve this profound data imbalance, this project presents an <em>unsupervised anomaly detection system</em>. Instead of teaching a network what every defect looks like, the model is trained exclusively on defect-free ("normal") images to learn the normative statistical distribution and the latent mathematical representation of perfection.</p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Core Architecture</h3>
+          <p class="modal-text">The foundational neural architecture deployed is a <strong>U-Net Convolutional Autoencoder (UNetAE)</strong>, which comprises:</p>
+          <ul class="modal-list">
+            <li><strong>Encoder Sub-Network:</strong> Systematically compresses the high-resolution input image into a significantly lower-dimensional latent space using a hierarchy of convolutional layers and spatial downsampling.</li>
+            <li><strong>Decoder Sub-Network:</strong> Operates as the mathematical inverse of the encoder, utilizing bilinear upsampling to systematically reconstruct the original image from the compressed state while avoiding checkerboard artifacts.</li>
+            <li><strong>U-Net Skip Connections:</strong> These connections directly bridge each encoder level with its symmetric decoder level. This preserves high-frequency spatial information that would otherwise be lost through the bottleneck, enabling the fine-grained spatial reconstructions necessary for pixel-level defect localization.</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Loss Function & Optimization</h3>
+          <p class="modal-text">Training employs a combined loss function of <strong>&alpha;-MSE + &beta;-SSIM (&alpha;=0.6, &beta;=0.4)</strong>:</p>
+          <ul class="modal-list">
+            <li><strong>Mean Squared Error (MSE):</strong> Metric penalizes large pixel-level errors globally.</li>
+            <li><strong>Structural Similarity Index (SSIM):</strong> Preserves local structure, luminance, and contrast patterns.</li>
+          </ul>
+          <div class="modal-highlight-box">
+            Together, they produce sharper, more faithful reconstructions than either metric alone. The system is optimized using the <strong>AdamW</strong> optimizer with a <strong>CosineAnnealingLR</strong> scheduler.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Anomaly Detection & Inference</h3>
+          <p class="modal-text">During the inference phase, the model easily processes flawless parts, but struggles to process aberrant features (like scratches or dents) that exist outside its learned normative distribution.</p>
+          <ul class="modal-list">
+            <li>Defective regions produce elevated per-pixel reconstruction errors.</li>
+            <li>This mathematical divergence is smoothed with a Gaussian filter, normalized, and projected back into spatial dimensions to create an anomaly heatmap.</li>
+            <li>By overlaying a JET colormap onto the original image, the system flags the entire image as anomalous while precisely localizing the exact spatial coordinates of the defect.</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Evaluation & Results</h3>
+          <p class="modal-text">The pipeline was rigorously evaluated on the MVTec Anomaly Detection benchmark, specifically utilizing the "leather" category. The system successfully bridges the gap between deep learning theory and industrial viability, achieving an <strong>image-level AUROC of 0.5710</strong> and a <strong>pixel-level AUROC of 0.8318</strong>. This demonstrates strong, highly accurate spatial localization of defects without requiring a single annotated example of a failure state during training.</p>
+        </div>
+
+        <div class="modal-actions">
+          <a href="./main.pdf" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Read Full Research Paper (PDF)
+          </a>
+          <a href="https://github.com/ektedar225" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View Code Repository
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: PID Tuning -->
+  <div class="modal-overlay" id="modal-pid-tuning">
+    <div class="modal-container">
+      <button class="modal-close-btn" aria-label="Close Case Study">&times;</button>
+      <div class="modal-content">
+        <div class="modal-category">Process Control & RL</div>
+        <h2 class="modal-title">AI-Driven PID Controller Tuning for Nonlinear Systems</h2>
+        
+        <div class="modal-meta-grid">
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Course</span>
+            <span class="modal-meta-value">CHL4020: Process Control</span>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Advisor</span>
+            <span class="modal-meta-value">Dr. Santosh K. Varanasi</span>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Key Stack</span>
+            <span class="modal-meta-value">PyTorch, Gym, SciPy</span>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Project Level</span>
+            <span class="modal-meta-value">L3 (Reproduction + Upgrade)</span>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Overview & Motivation</h3>
+          <p class="modal-text">PID controllers form the backbone of industrial process automation. However, designing and tuning these controllers for real-world chemical and biotechnological systems presents a significant challenge due to severe nonlinearities. The traditional engineering approach requires linearizing the system around a specific operating point. While functional, this method suffers from performance degradation the moment the system dynamics shift away from that calculated linearization point.</p>
+          <p class="modal-text">This project explores a modern, model-free alternative by successfully reproducing and substantially improving upon the research paper <strong>"Tuning of PID Controllers Using Reinforcement Learning for Nonlinear System Control" (Processes 2025)</strong>. By leveraging the <strong>Twin Delayed Deep Deterministic Policy Gradient (TD3)</strong> reinforcement learning algorithm, the system autonomously learns optimal PID gains ($K_p$, $K_i$, $K_d$) through direct interaction with the nonlinear plant, completely bypassing the need for explicit mathematical linearization.</p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Phase 1: Architecture & Baseline Reproduction</h3>
+          <p class="modal-text">In this architecture, the PID controller is modeled mathematically as a single-layer linear neural network without an activation function. The three weights of this network directly correspond to the PID gains. The state fed into the RL agent consists of the exact signals a standard PID utilizes: the error ($e$), the integral of the error ($\int e\,dt$), and the derivative of the error ($de/dt$).</p>
+          <p class="modal-text">To validate the generalizability of the TD3 algorithm, I reconstructed the pipeline in PyTorch and deployed it across four distinct dynamical environments:</p>
+          <ul class="modal-list">
+            <li><strong>Continuous Stirred Tank Reactor (CSTR):</strong> Governing chemical concentration control.</li>
+            <li><strong>Biotechnological Reactor:</strong> Replicating the baseline paper's focus on bacterial growth and substrate concentration.</li>
+            <li><strong>Nonlinear Water Tank:</strong> Managing fluid levels with nonlinear outflow dynamics.</li>
+            <li><strong>Second-Order Mechanical System:</strong> Controlling position via force inputs.</li>
+          </ul>
+          <div class="modal-highlight-box">
+            The baseline TD3 agent successfully converged to stable control policies across all environments, matching the performance of classical tuning methods without requiring system equations.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Phase 2: Algorithmic Improvements & Addressing "Integrator Collapse"</h3>
+          <p class="modal-text">During the reproduction phase, I identified a critical flaw in the original paper's LQG-style reward function formulation. The original reward penalized the absolute magnitude of the control effort ($u^2$). This inadvertently caused <strong>Integrator Collapse</strong>—the RL agent learned to drive the integral gain ($K_i$) to zero, accepting a permanent steady-state offset simply to minimize continuous control effort.</p>
+          <p class="modal-text">To resolve this and enhance the robustness of the agent, I engineered an <strong>"Improved TD3"</strong> architecture featuring three major algorithmic upgrades:</p>
+          <ul class="modal-list">
+            <li><strong>&Delta;u Reward Formulation with Overshoot Penalty:</strong> I redesigned the reward function to penalize the rate of change of the control signal ($\Delta u$) rather than its absolute magnitude, and introduced a targeted penalty for setpoint overshoot ($e_{overshoot}^2$). Because maintaining a constant control signal at a steady state now costs the agent nothing, the integrator is free to eliminate the offset, completely resolving the $K_i \approx 0$ bug.</li>
+            <li><strong>Prioritized Experience Replay (PER):</strong> Standard TD3 samples training data uniformly. I implemented PER to force the agent to prioritize learning from transitions with high TD-errors (i.e., highly "surprising" states), which accelerated learning and improved stability.</li>
+            <li><strong>Curriculum Learning:</strong> To prevent the agent from getting trapped in poor regional minima during early training phases, I introduced a curriculum that starts with easier initial conditions (close to the setpoint) and gradually increases difficulty.</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Results & Impact</h3>
+          <p class="modal-text">The Improved TD3 model demonstrated vastly superior transient performance. In complex environments like the CSTR, the improved agent not only converged faster due to the PER implementation, but also maintained a perfect zero steady-state error thanks to the modified &Delta;u reward logic. The explicit overshoot penalty ensured that mechanical and chemical systems reached their setpoints smoothly with minimal, safe oscillations. Ultimately, this project successfully bridges modern AI capabilities with fundamental chemical engineering process control, proving that RL is a highly practical, model-free alternative to classical PID tuning.</p>
+        </div>
+
+        <div class="modal-actions">
+          <a href="./b23ch1017.pdf" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Read Project Report (PDF)
+          </a>
+          <a href="./processes-13-00735-v2-2.pdf" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Baseline Paper (PDF)
+          </a>
+          <a href="https://github.com/prasangeet/TD3PIDtuner" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub Repo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Plant Design -->
+  <div class="modal-overlay" id="modal-plant-design">
+    <div class="modal-container">
+      <button class="modal-close-btn" aria-label="Close Case Study">&times;</button>
+      <div class="modal-content">
+        <div class="modal-category">Chemical Plant Design</div>
+        <h2 class="modal-title">Industrial-Scale Plant Design for N-Butyl Acetate Production</h2>
+        
+        <div class="modal-meta-grid">
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Institution</span>
+            <span class="modal-meta-value">IIT Jodhpur</span>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Course</span>
+            <span class="modal-meta-value">Process Plant Design</span>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Simulation Software</span>
+            <span class="modal-meta-value">ASPEN Plus V14</span>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Team Partners</span>
+            <span class="modal-meta-value">Hemant & Prasangeet</span>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Project Overview</h3>
+          <p class="modal-text">This project details the conceptual design and economic evaluation of a large-scale chemical plant capable of producing <strong>1000 TPD (Tonnes Per Day)</strong> of N-Butyl Acetate. Developed as part of the <em>Process Plant Design and Economics</em> coursework at IIT Jodhpur, the simulation demonstrates the technical and economic viability of utilizing advanced distillation techniques for high-yield chemical synthesis.</p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Core Process & Chemistry</h3>
+          <p class="modal-text">The core chemical pathway involves the esterification of acetic acid with 1-butanol:</p>
+          <div class="modal-highlight-box" style="text-align: center; font-family: monospace; font-size: 1.1rem; color: var(--foreground); letter-spacing: 0.05em;">
+            Acetic Acid + 1-Butanol &hArr; N-Butyl Acetate + Water
+          </div>
+          <p class="modal-text">To overcome the thermodynamic equilibrium limitations typical of standard esterification reactions, the process strategically incorporates <strong>toluene as an entrainer</strong>. This entrainer-assisted reactive distillation actively removes the water byproduct via a heterogeneous azeotrope, driving the reaction forward continuously to maximize both the yield and purity of the N-Butyl Acetate product.</p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Simulation & Equipment Specifications</h3>
+          <p class="modal-text">The entire process flowsheet was rigorously modeled and simulated from the ground up using <strong>ASPEN Plus V14</strong>. Key unit operations and equipment specifications were explicitly designed and sized for industrial-scale robustness:</p>
+          <ul class="modal-list">
+            <li><strong>Primary Reactor (R-101 A):</strong> An agitated Continuous Stirred-Tank Reactor (CSTR) constructed from carbon steel, sized at 1.68 m in diameter, operating at a design temperature of 127.8&deg;C and pressure of 2.43 barg.</li>
+            <li><strong>Separation Column (T-101):</strong> A massive sieve tray column designed with a 6.0 m diameter and 37.2 m height to facilitate the complex entrainer-assisted reactive separation.</li>
+            <li><strong>Heat Integration (E-101):</strong> A TEMA shell-and-tube heat exchanger providing a 69.7 m&sup2; heat transfer area for maximum thermal efficiency.</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Collaboration & Scope</h3>
+          <p class="modal-text">This comprehensive plant design was executed collaboratively alongside engineering peers <strong>Hemant Patel</strong> and <strong>Prasangeet</strong>. The project successfully bridges theoretical chemical engineering principles with practical, industry-standard simulation software to solve complex, multi-component separation and economic optimization challenges.</p>
+        </div>
+
+        <div class="modal-actions">
+          <a href="./NBA_Plant_Report.pdf" target="_blank" rel="noopener noreferrer" class="project-btn primary">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Read Plant Design Report (PDF)
+          </a>
+          <a href="https://github.com/ektedar225" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View Code Repository
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core JavaScript -->
+  <script>
+    // Case Study Modal Logic
+    const modalTriggers = document.querySelectorAll('[data-open-modal]');
+    const closeButtons = document.querySelectorAll('.modal-close-btn');
+    const modalOverlays = document.querySelectorAll('.modal-overlay');
+
+    const openModal = (modalId) => {
+      const modal = document.getElementById(`modal-${modalId}`);
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    };
+
+    const closeModal = (modal) => {
+      modal.classList.remove('active');
+      const activeModals = document.querySelectorAll('.modal-overlay.active');
+      if (activeModals.length === 0) {
+        document.body.style.overflow = '';
+      }
+    };
+
+    modalTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const modalId = trigger.getAttribute('data-open-modal');
+        openModal(modalId);
+      });
+    });
+
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const modal = btn.closest('.modal-overlay');
+        if (modal) closeModal(modal);
+      });
+    });
+
+    modalOverlays.forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          closeModal(overlay);
+        }
+      });
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const activeModal = document.querySelector('.modal-overlay.active');
+        if (activeModal) closeModal(activeModal);
+      }
+    });
+
+    // Smooth navigation active highlighting & sticky nav blur
+    const sections = document.querySelectorAll('section, .hero-wrapper');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const nav = document.querySelector('nav');
+    const bgOverlay = document.querySelector('.bg-overlay');
+
+    const handleScroll = () => {
+      // Toggle sticky background
+      if (window.scrollY > 40) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+
+      // Dynamic background overlay opacity based on scroll
+      if (bgOverlay) {
+        const scrollRatio = Math.min(window.scrollY / 400, 1);
+        bgOverlay.style.opacity = 0.12 + (0.84 * scrollRatio);
+      }
+
+      // Highlight active navigation section
+      let currentSectionId = 'home';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.pageYOffset >= (sectionTop - 140)) {
+          currentSectionId = section.getAttribute('id') || 'home';
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSectionId}`) {
+          link.classList.add('active');
+        }
+      });
+
+      // Scroll Reveal Items fade-in trigger
+      const revealItems = document.querySelectorAll('.reveal-item');
+      revealItems.forEach(item => {
+        const itemTop = item.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        if (itemTop < windowHeight - 90) {
+          item.classList.add('visible');
+        }
+      });
+    };
+
+    // Filter projects grid functionality
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Toggle active button class
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filterValue = btn.getAttribute('data-filter');
+
+        projectCards.forEach(card => {
+          const cardCat = card.getAttribute('data-category') || '';
+          if (filterValue === 'all' || cardCat.split(' ').includes(filterValue)) {
+            card.style.display = 'flex';
+            // Trigger animation
+            setTimeout(() => {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, 50);
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Trigger scroll update to reveal any newly visible items
+        setTimeout(handleScroll, 100);
+      });
+    });
+
+    window.addEventListener('scroll', handleScroll);
+    
+    // Initial run to activate elements visible on load
+    handleScroll();
+  </script>
+</body>
+</html>
